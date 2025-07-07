@@ -1,17 +1,21 @@
 import 'package:animations/animations.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:food_app/model/cubit/item.dart';
-import 'package:food_app/view_model/commpnas/color.dart';
-import 'package:food_app/viwes/screens/CustomDetailsScreen.dart';
 
-class CustomImageHome extends StatelessWidget {
-  const CustomImageHome({super.key, required this.item});
+import '../../model/cubit/item.dart';
+import '../../view_model/commpnas/color.dart';
+import '../screens/CustomDetailsScreen.dart';
+
+class TheBesrCatogary extends StatelessWidget {
   final Item item;
+
+  TheBesrCatogary({super.key, required this.item,});
 
   @override
   Widget build(BuildContext context) {
+
     return ClipRRect(
-      borderRadius: BorderRadiusGeometry.circular(20),
+      borderRadius: BorderRadius.circular(20),
       child: OpenContainer(
         transitionType: ContainerTransitionType.fadeThrough,
         closedColor: Colors.transparent,

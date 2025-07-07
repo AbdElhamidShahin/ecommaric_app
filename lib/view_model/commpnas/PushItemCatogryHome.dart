@@ -30,10 +30,11 @@ class Pushitemcatogryhome extends StatelessWidget {
               }
 
               return GridView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
-
                   mainAxisSpacing: 30,
                   childAspectRatio: .7,
                 ),

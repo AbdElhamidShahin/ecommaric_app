@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:food_app/view_model/commpnas/color.dart';
 import 'package:food_app/viwes/screens/Home_Page.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +12,8 @@ import 'viwes/screens/Home LoginScreen.dart';
 import 'view_model/commpnas/helper/ThemeProvider.dart';
 
 void main() async {
+  // debugPaintSizeEnabled = true; // ← بتفعل وضع تحديد العناصر
+
   WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp();
   // FirebaseAuth.instance.setSettings(appVerificationDisabledForTesting: true);
@@ -49,11 +52,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          fontFamily: 'Poppins',
           brightness: Brightness.light,
         ),
         darkTheme: ThemeData(
-          fontFamily: 'Poppins',
           brightness: Brightness.dark,
         ),
         themeMode: themeProvider.isDarkMode ? ThemeMode.dark : ThemeMode.light,

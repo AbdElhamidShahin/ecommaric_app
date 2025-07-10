@@ -29,23 +29,21 @@ class Pushitemcatogryhome extends StatelessWidget {
                 return const Center(child: Text('لا توجد عناصر متاحة'));
               }
 
-              return GridView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 30,
-                  childAspectRatio: .7,
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                ), // padding متساوي يمين وشمال
+                child: Wrap(
+                  spacing: 16,
+                  runSpacing: 24,
+                  children: List.generate(items.length, (index) {
+                    final item = items[index];
+                    return SizedBox(
+                      width: (MediaQuery.of(context).size.width - 48) / 2, // حسب الشاشة
+                      child: CustomImageHome(item: item),
+                    );
+                  }),
                 ),
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  final item = items[index];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: CustomImageHome(item: item),
-                  );
-                },
               );
             } else {
               return const SizedBox.shrink();

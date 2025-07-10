@@ -92,7 +92,6 @@ flutter:
   fonts:
     - family: Poppins
       fonts:
-        - asset: assets/fonts/Rubik-Italic-VariableFont_wght.ttf
 
   #
   # For details regarding fonts from package dependencies,

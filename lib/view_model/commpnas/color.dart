@@ -19,7 +19,24 @@ const Gradient ColorItem = RadialGradient(
   ],
   stops: [0.0, 0.8],
 );
-
+const Gradient ColorBest = RadialGradient(
+  center: Alignment.centerLeft,
+  radius: 1.2,
+  colors: [
+    Color(0xFF3F434D),
+    Color(0xFF212226),
+  ],
+  stops: [0.0, 0.7],
+);
+const Gradient ColorBestCountinar = RadialGradient(
+  center: Alignment.centerLeft,
+  radius: 1.2,
+  colors: [
+    Color(0xFF4C505B),
+    Color(0xFF212226),
+  ],
+  stops: [.0, .7],
+);
 const Color colorBasic = Color(0xFFFFCB8D);
 const Color colorA = Color(0xFFA74138);
 const Color colorB = Color(0xFFF7941D);

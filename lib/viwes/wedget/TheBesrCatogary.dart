@@ -9,11 +9,13 @@ import '../screens/CustomDetailsScreen.dart';
 class TheBesrCatogary extends StatelessWidget {
   final Item item;
 
-  TheBesrCatogary({super.key, required this.item,});
+  TheBesrCatogary({
+    super.key,
+    required this.item,
+  });
 
   @override
   Widget build(BuildContext context) {
-
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: OpenContainer(
@@ -28,77 +30,61 @@ class TheBesrCatogary extends StatelessWidget {
             onTap: openContainer,
             child: Container(
               decoration: const BoxDecoration(
-                gradient: ColorItem,
+                gradient: ColorBest,
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+           child:
+           Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.star_purple500_outlined,
-                        size: 20,
-                        color: Colors.orangeAccent,
-                      ),
-                      Text(
-                        item.rating,
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                      ),
-                    ],
-                  ),
-                  Image.network(
-                    item.imageUrl,
-                    height: 130,
-                    width: 210,
-                    fit: BoxFit.cover,
-                  ),
-                  const SizedBox(height: 16),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Text(
-                      item.name,
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  Expanded( // <-- هذا هو المفتاح
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16),
+                          child: Text(
+                            item.name,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            softWrap: true,
+                            overflow: TextOverflow.visible,
+                          ),
+                        ),
+                        const SizedBox(height: 26),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              gradient: ColorBestCountinar,
+                              color: Colors.black.withOpacity(0.9)
+
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20,vertical: 12),
+                              child: Text(
+                                'Explore now',
+                                style: TextStyle(color: Colors.white, fontSize: 18),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                  SizedBox(
-                    height: 12,
+                  Padding(
+                    padding: const EdgeInsets.only(right: 24),
+                    child: Image.network(
+                      item.imageUrl,
+                      width: 160, // قللتها عشان توسع للنص
+                      height: 160,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: Text(
-                          '\$${item.price}',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: Container(
-                          height: 35,
-                          width: 35,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            gradient: ColorItem,
-                          ),
-                          child: Icon(
-                            Icons.arrow_forward,
-                            color: Colors.white70,
-                          ),
-                        ),
-                      )
-                    ],
-                  )
                 ],
               ),
             ),

@@ -29,9 +29,14 @@ class CustomImageHome extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: [SizedBox(
+                  height: 12,
+                ),
                   Row(
                     children: [
+                      SizedBox(
+                        width: 12,
+                      ),
                       Icon(
                         Icons.star_purple500_outlined,
                         size: 20,
@@ -49,7 +54,7 @@ class CustomImageHome extends StatelessWidget {
                     width: 210,
                     fit: BoxFit.cover,
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 24),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: Text(
@@ -92,9 +97,11 @@ class CustomImageHome extends StatelessWidget {
                             color: Colors.white70,
                           ),
                         ),
-                      )
+                      ),
                     ],
-                  )
+                  ),SizedBox(
+                    height: 12,
+                  ),
                 ],
               ),
             ),

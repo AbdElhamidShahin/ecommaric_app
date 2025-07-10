@@ -8,41 +8,62 @@ import '../../view_model/commpnas/PushItemCatogryHome.dart';
 import '../../view_model/commpnas/color.dart';
 import '../wedget/CustomRowHome.dart';
 import '../wedget/TheBesrCatogary.dart';
+
 class HomeLayout extends StatelessWidget {
   const HomeLayout({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: appBackgroundGradient,
-        ),
-        child: Column(
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: appBackgroundGradient,
+      ),
+       child:   Column(
           children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.3,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+              child: Customappbar(
+                text: "PixelCo.",
+              ),
+            ),
+
+            Expanded(
+              flex: 3,
               child: Pushitemcatogry(
                 tableName: 'camira',
                 uniqueId: '1',
-                height: 300, // You can customize the height
-              )
+              ),
             ),
-            const Customrowhome(),
-            Expanded(
-              child: SingleChildScrollView(
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.7,
-                  child: Pushitemcatogryhome(
-                    tableName: 'camira',
-                    uniqueId: '1',
+
+            SizedBox(height: 24),
+
+            // ✅ هنا التصحيح، شيلت الـ ;
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18),
+                  child: Text(
+                    "Popular",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
+              ],
+            ),
+            SizedBox( height: 16,),
+            Expanded(
+              flex: 5,
+              child: Pushitemcatogryhome(
+                tableName: 'camira',
+                uniqueId: '1',
               ),
             ),
           ],
         ),
-      ),
+
     );
   }
 }

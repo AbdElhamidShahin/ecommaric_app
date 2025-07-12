@@ -61,27 +61,20 @@ class _CustomcarditemState extends State<Customcarditem> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  buildButton("-", 12, 10, 20, () {
-                    if (count > 1) {
-                      setState(() {
-                        count--;
-                      });
-                      // تحديث الكمية في السلة
-                      Provider.of<ItemCard>(context, listen: false)
-                          .addCard(widget.item, count);
-                    }
-                  }),
-                  buildNumber(count, 16, 10, 20),
-                  buildButton("+", 12, 10, 20, () {
+                  buildButton(Icons.add, () {
                     setState(() {
                       count++;
                     });
-                    // تحديث الكمية في السلة
-                    Provider.of<ItemCard>(context, listen: false)
-                        .addCard(widget.item, count);
+                  }),
+                  buildNumber(count, 16, 10, 28), // ← ضبط حجم الخط حسب الحاجة
+                  buildButton(Icons.remove, () {
+                    setState(() {
+                      if (count > 1) count--;
+                    });
                   }),
                 ],
               ),
+
             ),
             const Spacer(),
             Column(

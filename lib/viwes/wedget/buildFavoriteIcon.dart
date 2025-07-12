@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:food_app/model/cubit/item.dart' show Item, ItemProvider;
 import 'package:provider/provider.dart';
@@ -27,23 +28,21 @@ class _BuildFavoriteIconState extends State<BuildFavoriteIcon> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(25),
-        child: Container(
-          width: 50,
-          height: 50,
-          decoration: BoxDecoration(
-            color: colorBasic,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 4,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(25),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: ColorItemFavorite,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           child: IconButton(
             onPressed: () {
               setState(() {
@@ -52,10 +51,27 @@ class _BuildFavoriteIconState extends State<BuildFavoriteIcon> {
                     .addItem(widget.item);
               });
             },
-            icon: Icon(
-              isFavorite ? Icons.favorite : Icons.favorite_border,
-              size: 32,
-              color: isFavorite ? Colors.red : Colors.red,
+            icon: ShaderMask(
+              shaderCallback: (Rect bounds) {
+                return const LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [
+                    Color(0xFF818285),
+                    Color(0xFFF3F3F4),
+                  ],
+                  stops: [0.0, 0.8],
+                ).createShader(bounds);
+              },
+              blendMode: BlendMode.srcIn,
+              child: SvgPicture.asset(
+                isFavorite
+                    ? 'assets/icons/bookmark1.svg'
+                    : 'assets/icons/bookmark.svg',
+                height: 32,
+                width: 32,
+                // ❌ لا تستخدم color هنا لأنه فيه ShaderMask
+              ),
             ),
           ),
         ),

@@ -9,7 +9,15 @@ const Gradient appBackgroundGradient = LinearGradient(
   ],
   stops: [0.0, 0.3], // بداية ونهاية التدرج
 );
-
+const Gradient CustomdetailsUpper = LinearGradient(
+  begin: Alignment.topRight, // يبدأ من أعلى اليسار
+  end: Alignment.bottomLeft, // ينتهي إلى أسفل اليمين
+  colors: [
+    Color(0xFF34363D), // اللون الفاتح
+    Color(0xFF1A1B1D), // اللون الغامق
+  ],
+  stops: [0.0, 0.2], // بداية ونهاية التدرج
+);
 const Gradient ColorItem = RadialGradient(
   center: Alignment.topRight,
   radius: 1.2,
@@ -19,6 +27,22 @@ const Gradient ColorItem = RadialGradient(
   ],
   stops: [0.0, 0.8],
 );
+
+
+const Gradient ColorItemFavorite = LinearGradient(
+  begin: Alignment.topLeft, // يبدأ من أعلى اليسار
+  end: Alignment.bottomRight,
+  colors: [
+    Color(0xFF3F434D),
+    Color(0xFF212226),
+  ],
+  stops: [0.0, 0.8],
+);
+
+
+
+
+
 const Gradient ColorBest = RadialGradient(
   center: Alignment.centerLeft,
   radius: 1.2,
@@ -36,6 +60,15 @@ const Gradient ColorBestCountinar = RadialGradient(
     Color(0xFF212226),
   ],
   stops: [.0, .7],
+);
+const Gradient ColorTextBottom = LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,// يبدأ من أعلى اليسار
+  colors: [
+    Color(0xFF34363D),
+    Color(0xFF212226),
+  ],
+  stops: [.0, .9],
 );
 const Color colorBasic = Color(0xFFFFCB8D);
 const Color colorA = Color(0xFFA74138);

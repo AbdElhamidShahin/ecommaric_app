@@ -33,256 +33,226 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
   Widget build(BuildContext context) {
     return Expanded(
       child: Scaffold(
-        backgroundColor: const Color.fromRGBO(42, 45, 52, 1),
-        body: Stack(
-          children: [
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 460,
-              child: ClipRRect(
-                borderRadius:
-                    const BorderRadius.vertical(bottom: Radius.circular(16)),
-                child: Image.network(
-                  widget.item.imageUrl,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Image.asset(
-                      'assets/imagesFood/download.png',
-                      fit: BoxFit.cover,
-                    );
-                  },
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: CustomdetailsUpper,
+          ),
+          child: Stack(
+            children: [
+              Positioned(
+                top: 100,
+                left: 0,
+                right: 0,
+                bottom: 550,
+                child: ClipRRect(
+                  borderRadius:
+                      const BorderRadius.vertical(bottom: Radius.circular(16)),
+                  child: Image.network(
+                    widget.item.imageUrl,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.asset(
+                        'assets/imagesFood/download.png',
+                        fit: BoxFit.cover,
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-            Positioned(
-              bottom: 0,
-              top: 250,
-              left: 0,
-              right: 0,
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: colorBasic,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(50)),
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 20),
-                      child: Row(
+              Positioned(
+                bottom: 0,
+                top: MediaQuery.of(context).size.height /
+                    2, // ← يبدأ من منتصف الشاشة
+                left: 0,
+                right: 0,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    gradient: ColorBest,
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(24)),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.item.name,
+                        style: TextStyle(
+                          fontSize: 32,
+                          color: Colors.white
+                              .withOpacity(0.85), // ← أفتح من white70
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Row(
                         children: [
                           Text(
-                            "${(double.parse(widget.item.price))}EGP",
+                            "\$${(widget.item.price)}",
                             style: TextStyle(
-                              fontSize: 26,
-                              color: colorA,
+                              fontSize: 32,
+                              color: Colors.white
+                                  .withOpacity(0.85), // ← أفتح من white70
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Spacer(),
-                          Text(
-                            widget.item.name,
-                            style: const TextStyle(
-                              fontSize: 28,
-                              color: colorA,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              buildButton(Icons.add, () {
+                                setState(() {
+                                  count++;
+                                });
+                              }),
+                              buildNumber(count, 16, 10,
+                                  28), // ← ضبط حجم الخط حسب الحاجة
+                              buildButton(Icons.remove, () {
+                                setState(() {
+                                  if (count > 1) count--;
+                                });
+                              }),
+                            ],
                           ),
                         ],
                       ),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          "المكونات",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          '${widget.item.description}',
-                          textDirection: TextDirection.rtl,
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 6,
-                    ),
-                    Text(
-                      "مده الطهي:${widget.item.rating}دقيقه",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      "تكفي:${widget.item.rating}",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                      Row(
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.red.shade700,
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  blurRadius: 4,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                buildButton("-", 12, 10, 20, () {
-                                  if (count > 1) {
-                                    setState(() {
-                                      count--;
-                                    });
-                                  }
-                                }),
-                                buildNumber(count, 16, 10, 20),
-                                buildButton("+", 12, 10, 20, () {
-                                  setState(() {
-                                    count++;
-                                  });
-                                }),
-                              ],
-                            ),
+                          Icon(
+                            Icons.star_purple500_outlined,
+                            size: 28,
+                            color: Colors.orangeAccent,
+                          ),
+                          Text(
+                            "${widget.item.rating}",
+                            style: TextStyle(color: Colors.white, fontSize: 24),
                           ),
                           SizedBox(
-                            width: 50,
+                            width: 24,
                           ),
                           Text(
-                            "الكميه",
-                            style: const TextStyle(
-                              fontSize: 28,
-                              color: colorA,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            "(500 reviews)",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey),
                           ),
                         ],
                       ),
-                    ),
-                    Text(
-                      "الاضافات",
-                      style: const TextStyle(
-                        fontSize: 28,
-                        color: colorA,
-                        fontWeight: FontWeight.bold,
+                      SizedBox(
+                        height: 32,
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(24)),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 4, horizontal: 12),
-                            child: Text(
-                              "${(double.parse(widget.item.price) * count)}EGP",
-                              style: const TextStyle(
-                                fontSize: 22,
-                                color: colorB,
-                                fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${widget.item.description}',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white54,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ), SizedBox(height: 12,),
+                      Row(
+mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                         BuildFavoriteIcon(
+                            item: widget.item,
+                          ),
+                          Spacer(),
+                          Container(
+                            decoration: BoxDecoration(
+                              gradient: ColorTextBottom,
+                              borderRadius: BorderRadius.circular(
+                                  20), // Added borderRadius here to match the button
+                            ),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors
+                                    .transparent, // Make button background transparent
+                                shadowColor:
+                                    Colors.transparent, // Remove shadow
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                padding: const EdgeInsets.symmetric(horizontal: 48,vertical: 18),
+                              ),
+                              onPressed: () {
+                                Provider.of<ItemCard>(context, listen: false)
+                                    .addCard(widget.item, count);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content:
+                                        Text('تمت إضافة المنتج إلى السلة!'),
+                                    duration: Duration(seconds: 2),
+                                  ),
+                                );
+                              },
+                              child: Center(
+                                child: Text(
+                                  "Add to bag",
+                                  style: TextStyle(
+                                    color: Colors.white.withOpacity(.8),
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 32,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 30,
-                        ),
-                        Text(
-                          "المجموع",
-                          style: const TextStyle(
-                            fontSize: 28,
-                            color: colorA,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Spacer(),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: colorB,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
+                          )
+                        ],
                       ),
-                      onPressed: () {
-                        Provider.of<ItemCard>(context, listen: false)
-                            .addCard(widget.item, count); // إضافة الكمية
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('تمت إضافة المنتج إلى السلة!'),
-                            duration: Duration(seconds: 2),
-                          ),
-                        );
+                    ],
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 50,
+                    ),
+                    GestureDetector(
+                      onTap:
+                      (){
+                        Navigator.pop(context);
                       },
-                      child: const Center(
-                        child: Text(
-                          "اضافه الي السله",
-                          style: TextStyle(
-                            color: colorA,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        child: Container(
+                          height: 45,
+                          width: 60,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            gradient: ColorTextBottom,
+                          ),
+                          child: Icon(
+                            Icons.arrow_back_outlined,
+                            color: Colors.white,
+                            size: 32,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    SizedBox(
+                      height: 80,
+                    ),
                   ],
                 ),
               ),
-            ),
-            Align(
-              alignment: Alignment.topRight,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: Icon(
-                        Icons.arrow_forward_ios_sharp,
-                        color: colorB,
-                        size: 32,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 80,
-                  ),
-                  BuildFavoriteIcon(
-                    item: widget.item,
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

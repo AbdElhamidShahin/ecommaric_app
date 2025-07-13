@@ -54,21 +54,21 @@ class _AccountScreenState extends State<AccountScreen> {
                 size: 24,
               ))
         ],
-        leading: IconButton(
-            onPressed: () async {
-              final result = await Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => EditAccountScreen()),
-              );
-              if (result == true) {
-                await loadUserData();
-              }
-            },
-            icon: const Icon(
-              Icons.edit_note,
-              color: colorA,
-              size: 32,
-            )),
+        // leading: IconButton(
+        //     onPressed: () async {
+        //       final result = await Navigator.push(
+        //         context,
+        //         MaterialPageRoute(builder: (context) => EditAccountScreen()),
+        //       );
+        //       if (result == true) {
+        //         await loadUserData();
+        //       }
+        //     },
+        //     icon: const Icon(
+        //       Icons.edit_note,
+        //       color: colorA,
+        //       size: 32,
+        //     )),
         title: const Center(
             child: Text(
           'حسابي',
@@ -145,7 +145,7 @@ class _AccountScreenState extends State<AccountScreen> {
             CustomItemSetteings('المفضله', () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Favorite()),
+                MaterialPageRoute(builder: (context) => FavoriteScreen()),
               );
             }),
             CustomItemSetteings('الاشعارات', () {}),

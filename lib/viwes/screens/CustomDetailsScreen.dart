@@ -7,27 +7,15 @@ import 'package:food_app/viwes/wedget/buildFavoriteIcon.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/cubit/ItemProvider.dart';
+import '../wedget/CustomTextButton.dart';
 
-class CustomDetailsScreen extends StatefulWidget {
+class CustomDetailsScreen extends StatelessWidget {
   final Item item;
 
-  CustomDetailsScreen({super.key, required this.item});
+  const CustomDetailsScreen({super.key, required this.item});
 
-  @override
-  State<CustomDetailsScreen> createState() => _CustomDetailsScreenState();
-}
 
-class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
-  late bool isCard;
-  int count = 1;
 
-  @override
-  void initState() {
-    super.initState();
-    isCard = Provider.of<ItemProvider>(context, listen: false)
-        .items
-        .any((element) => element.id == widget.item.id);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +36,7 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                   borderRadius:
                       const BorderRadius.vertical(bottom: Radius.circular(16)),
                   child: Image.network(
-                    widget.item.imageUrl,
+                    item.imageUrl,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
                       return Image.asset(
@@ -62,7 +50,7 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
               Positioned(
                 bottom: 0,
                 top: MediaQuery.of(context).size.height /
-                    2, // ← يبدأ من منتصف الشاشة
+                    2.3, // ← يبدأ من منتصف الشاشة
                 left: 0,
                 right: 0,
                 child: Container(
@@ -77,7 +65,7 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.item.name,
+                        item.name,
                         style: TextStyle(
                           fontSize: 32,
                           color: Colors.white
@@ -88,37 +76,45 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                       SizedBox(
                         height: 12,
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            "\$${(widget.item.price)}",
-                            style: TextStyle(
-                              fontSize: 32,
-                              color: Colors.white
-                                  .withOpacity(0.85), // ← أفتح من white70
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Spacer(),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              buildButton(Icons.add, () {
-                                setState(() {
-                                  count++;
-                                });
-                              }),
-                              buildNumber(count, 16, 10,
-                                  28), // ← ضبط حجم الخط حسب الحاجة
-                              buildButton(Icons.remove, () {
-                                setState(() {
-                                  if (count > 1) count--;
-                                });
-                              }),
-                            ],
-                          ),
-                        ],
+                      QuantitySelector(
+                        price: double.parse(item.price), // أو item.price لو هو double
+                        onChanged: (newCount) {
+                          // اعمل اللي تحبه هنا لما العدد يتغير
+                          print("عدد العناصر: $newCount");
+                        },
                       ),
+
+                      // Row(
+                      //   children: [
+                      //     Text(
+                      //       "\$${(item.price)}",
+                      //       style: TextStyle(
+                      //         fontSize: 32,
+                      //         color: Colors.white
+                      //             .withOpacity(0.85), // ← أفتح من white70
+                      //         fontWeight: FontWeight.bold,
+                      //       ),
+                      //     ),
+                      //     Spacer(),
+                      //     Row(
+                      //       mainAxisSize: MainAxisSize.min,
+                      //       children: [
+                      //         buildButton(Icons.add, () {
+                      //           setState(() {
+                      //             count++;
+                      //           });
+                      //         }),
+                      //         buildNumber(count, 16, 10,
+                      //             28), // ← ضبط حجم الخط حسب الحاجة
+                      //         buildButton(Icons.remove, () {
+                      //           setState(() {
+                      //             if (count > 1) count--;
+                      //           });
+                      //         }),
+                      //       ],
+                      //     ),
+                      //   ],
+                      // ),
                       Row(
                         children: [
                           Icon(
@@ -127,7 +123,7 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                             color: Colors.orangeAccent,
                           ),
                           Text(
-                            "${widget.item.rating}",
+                            "${item.rating}",
                             style: TextStyle(color: Colors.white, fontSize: 24),
                           ),
                           SizedBox(
@@ -151,9 +147,9 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${widget.item.description}',
+                                '${item.description}',
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 18,
                                   color: Colors.white54,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -161,54 +157,31 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                             ],
                           ),
                         ),
-                      ), SizedBox(height: 12,),
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
                       Row(
-mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                         BuildFavoriteIcon(
-                            item: widget.item,
+                          BuildFavoriteIcon(
+                            item: item,
                           ),
                           Spacer(),
-                          Container(
-                            decoration: BoxDecoration(
-                              gradient: ColorTextBottom,
-                              borderRadius: BorderRadius.circular(
-                                  20), // Added borderRadius here to match the button
-                            ),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors
-                                    .transparent, // Make button background transparent
-                                shadowColor:
-                                    Colors.transparent, // Remove shadow
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                padding: const EdgeInsets.symmetric(horizontal: 48,vertical: 18),
-                              ),
-                              onPressed: () {
-                                Provider.of<ItemCard>(context, listen: false)
-                                    .addCard(widget.item, count);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content:
-                                        Text('تمت إضافة المنتج إلى السلة!'),
-                                    duration: Duration(seconds: 2),
-                                  ),
-                                );
-                              },
-                              child: Center(
-                                child: Text(
-                                  "Add to bag",
-                                  style: TextStyle(
-                                    color: Colors.white.withOpacity(.8),
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 32,
-                                  ),
-                                ),
-                              ),
-                            ),
+                          CustomTextButton(
+
+
+
+
+
+                     item: item,
+                            horizontal:60,
+                            vertical: 18,
+                            fontSize: 28,
+
+
+
                           )
                         ],
                       ),
@@ -224,8 +197,7 @@ mainAxisAlignment: MainAxisAlignment.end,
                       height: 50,
                     ),
                     GestureDetector(
-                      onTap:
-                      (){
+                      onTap: () {
                         Navigator.pop(context);
                       },
                       child: Padding(

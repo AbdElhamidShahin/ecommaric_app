@@ -9,10 +9,10 @@ import '../../../viwes/screens/CatogaryScreen.dart';
 import '../../../viwes/screens/Favorite_Screen.dart';
 import '../../../viwes/screens/Home_Layout.dart';
 
-class FoodCubit extends Cubit<FoodState> {
-  FoodCubit() : super((TravelInitialState()));
+class AppCubit extends Cubit<AppState> {
+  AppCubit() : super((TravelInitialState()));
 
-  static FoodCubit get(context) => BlocProvider.of<FoodCubit>(context);
+  static AppCubit get(context) => BlocProvider.of<AppCubit>(context);
 
   Future<void> fetchCategoryData(String tableName, {String? uniqueId}) async {
     try {

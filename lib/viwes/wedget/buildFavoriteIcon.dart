@@ -68,8 +68,8 @@ class _BuildFavoriteIconState extends State<BuildFavoriteIcon> {
                 isFavorite
                     ? 'assets/icons/bookmark1.svg'
                     : 'assets/icons/bookmark.svg',
-                height: 32,
-                width: 32,
+                height: 28,
+                width: 28,
                 // ❌ لا تستخدم color هنا لأنه فيه ShaderMask
               ),
             ),

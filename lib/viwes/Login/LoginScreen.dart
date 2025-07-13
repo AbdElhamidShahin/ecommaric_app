@@ -6,7 +6,7 @@
 // import 'package:food_app/viwes/Login/RegisterScreen.dart';
 // import 'package:food_app/viwes/screens/Home%20LoginScreen.dart';
 // import 'package:food_app/viwes/screens/Home_Page.dart';
-// import 'package:food_app/viwes/wedget/CustomButton.dart';
+// import 'package:food_app/viwes/wedget/CustomTextButton.dart';
 // import 'package:food_app/viwes/wedget/Customtextfeild.dart';
 //
 // class Loginscreen extends StatelessWidget {

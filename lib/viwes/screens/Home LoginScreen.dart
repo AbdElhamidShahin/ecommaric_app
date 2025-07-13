@@ -1,7 +1,7 @@
 // import 'package:flutter/material.dart';
 // import 'package:food_app/view_model/commpnas/color.dart';
 // import 'package:food_app/viwes/Login/LoginScreen.dart';
-// import 'package:food_app/viwes/wedget/CustomButton.dart';
+// import 'package:food_app/viwes/wedget/CustomTextButton.dart';
 //
 // import '../Login/RegisterScreen.dart';
 //

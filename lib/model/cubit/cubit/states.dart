@@ -1,20 +1,20 @@
 import 'package:food_app/model/cubit/item.dart';
 
-abstract class FoodState {}
+abstract class AppState {}
 
-class TravelInitialState extends FoodState {}
+class TravelInitialState extends AppState {}
 
-class TravelBottomnavBarState extends FoodState {}
+class TravelBottomnavBarState extends AppState {}
 
-class CategoryLoadingState extends FoodState {}
+class CategoryLoadingState extends AppState {}
 
-class CategorySuccess extends FoodState {
+class CategorySuccess extends AppState {
   final List<Item> items;
 
   CategorySuccess({required this.items});
 }
 
-class CategoryLoaded extends FoodState {
+class CategoryLoaded extends AppState {
   final List<Item> items;
   final String tableName;
   final String uniqueId;
@@ -22,20 +22,20 @@ class CategoryLoaded extends FoodState {
   CategoryLoaded(this.items, this.tableName, {required this.uniqueId});
 }
 
-class CategoryError extends FoodState {
+class CategoryError extends AppState {
   final String message;
 
   CategoryError(this.message);
 }
 
-class updateFavoriteState extends FoodState {
+class updateFavoriteState extends AppState {
   final bool isFavorite;
   updateFavoriteState(this.isFavorite);
 }
 
-class FoodCountState extends FoodState {
+class FoodCountState extends AppState {
   final int count;
   FoodCountState(this.count);
 }
 
-class CategoryInitial extends FoodState {}
+class CategoryInitial extends AppState {}

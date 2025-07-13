@@ -15,15 +15,13 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
   late PageController pageController;
-  late AnimationController _animationController;
-  late Animation<double> _animation;
 
   final List<Widget> bottomScreens = [
     HomeLayout(),
-    Favorite(),
+    FavoriteScreen(),
     Cardscreen(items: []),
     AccountScreen(),
   ];
@@ -46,28 +44,18 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   void initState() {
     super.initState();
     pageController = PageController(initialPage: currentIndex);
-    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
-    _animation = CurvedAnimation(parent: _animationController, curve: Curves.easeInOut);
   }
 
   void changeTab(int index) {
     setState(() {
       currentIndex = index;
     });
-
-    _animationController.forward(from: 0);
-
-    pageController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 400),
-      curve: Curves.easeInOutCubic,
-    );
+    pageController.jumpToPage(index);
   }
 
   @override
   void dispose() {
     pageController.dispose();
-    _animationController.dispose();
     super.dispose();
   }
 
@@ -97,20 +85,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               ),
             ),
 
-            // Top notch above the bar
-            AnimatedBuilder(
-              animation: _animation,
-              builder: (_, __) {
-                final animatedX = iconWidth * currentIndex + iconWidth / 2;
-                return Positioned(
-                  top: 0,
-                  left: animatedX - 49,
-                  child: CustomPaint(
-                    size: const Size(100, 45),
-                    painter: NotchPainter(),
-                  ),
-                );
-              },
+            // Top notch (ثابت بدون حركة)
+            Positioned(
+              top: 0,
+              left: iconWidth * currentIndex + iconWidth / 2 - 49,
+              child: CustomPaint(
+                size: const Size(100, 45),
+                painter: NotchPainter(),
+              ),
             ),
 
             // Icons row
@@ -119,35 +101,29 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: List.generate(activeIcons.length, (index) {
                   final isSelected = currentIndex == index;
-                  final iconPath =
-                  isSelected ? activeIcons[index] : inactiveIcons[index];
+                  final iconPath = isSelected ? activeIcons[index] : inactiveIcons[index];
 
                   return GestureDetector(
                     onTap: () => changeTab(index),
-                    child: AnimatedScale(
-                      scale: isSelected ? 1.15 : 1.0,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeInOut,
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: ShaderMask(
-                          shaderCallback: (Rect bounds) {
-                            return const LinearGradient(
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                              colors: [
-                                Color(0xFF818285),
-                                Color(0xFFF3F3F4),
-                              ],
-                              stops: [0.0, 0.8],
-                            ).createShader(bounds);
-                          },
-                          blendMode: BlendMode.srcIn,
-                          child: SvgPicture.asset(
-                            iconPath,
-                            width: 32,
-                            height: 32,
-                          ),
+                    child: Container(
+                      alignment: Alignment.center,
+                      child: ShaderMask(
+                        shaderCallback: (Rect bounds) {
+                          return const LinearGradient(
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                            colors: [
+                              Color(0xFF818285),
+                              Color(0xFFF3F3F4),
+                            ],
+                            stops: [0.0, 0.8],
+                          ).createShader(bounds);
+                        },
+                        blendMode: BlendMode.srcIn,
+                        child: SvgPicture.asset(
+                          iconPath,
+                          width: 32,
+                          height: 32,
                         ),
                       ),
                     ),

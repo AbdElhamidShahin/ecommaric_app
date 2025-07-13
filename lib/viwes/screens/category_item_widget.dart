@@ -24,8 +24,8 @@ class _CategoryItemWidgetState extends State<CategoryItemWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => FoodCubit()..getCategories(),
-      child: BlocConsumer<FoodCubit, FoodState>(
+      create: (context) => AppCubit()..getCategories(),
+      child: BlocConsumer<AppCubit, AppState>(
         builder: (context, state) {
           if (state is CategoryLoadingState) {
             return const Center(child: CircularProgressIndicator());

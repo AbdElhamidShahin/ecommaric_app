@@ -58,23 +58,14 @@ class _CustomcarditemState extends State<Customcarditem> {
                   ),
                 ],
               ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  buildButton(Icons.add, () {
-                    setState(() {
-                      count++;
-                    });
-                  }),
-                  buildNumber(count, 16, 10, 28), // ← ضبط حجم الخط حسب الحاجة
-                  buildButton(Icons.remove, () {
-                    setState(() {
-                      if (count > 1) count--;
-                    });
-                  }),
-                ],
+              child: QuantitySelector(
+                price: double.parse(
+                    widget.item.price), // أو item.price لو هو double
+                onChanged: (newCount) {
+                  // اعمل اللي تحبه هنا لما العدد يتغير
+                  print("عدد العناصر: $newCount");
+                },
               ),
-
             ),
             const Spacer(),
             Column(
@@ -88,7 +79,7 @@ class _CustomcarditemState extends State<Customcarditem> {
                 Text(
                   "${(double.parse(widget.item.price) * count)}EGP",
                   style: const TextStyle(
-                  color: colorA, fontWeight: FontWeight.bold, fontSize: 16),
+                      color: colorA, fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ],
             ),

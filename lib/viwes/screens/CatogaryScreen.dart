@@ -35,13 +35,13 @@ class Catogaryscreen extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: BlocBuilder<FoodCubit, FoodState>(
+            child: BlocBuilder<AppCubit, AppState>(
               builder: (context, state) {
                 if (state is CategoryLoadingState) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is CategoryLoaded) {
                   final Items = state.items;
-                  var cubit = FoodCubit.get(context);
+                  var cubit = AppCubit.get(context);
 
                   return GridView.builder(
                     gridDelegate:

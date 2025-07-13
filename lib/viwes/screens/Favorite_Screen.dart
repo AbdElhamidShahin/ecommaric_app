@@ -1,69 +1,76 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:food_app/model/cubit/ItemProvider.dart';
-import 'package:food_app/model/cubit/item.dart';
-import 'package:food_app/viwes/screens/CustomDetailsScreen.dart';
-import 'package:food_app/viwes/wedget/CustomAppBar.dart';
-import 'package:food_app/viwes/wedget/CustomItemFavorite.dart';
 import 'package:provider/provider.dart';
+import '../../model/cubit/ItemProvider.dart';
+import '../wedget/FavoriteProductCard.dart';
 
-class Favorite extends StatefulWidget {
-  final Item? item;
+class FavoriteScreen extends StatelessWidget {
+  const FavoriteScreen({super.key});
 
-  Favorite({super.key, this.item});
-
-  @override
-  State<Favorite> createState() => _FavoriteState();
-}
-
-class _FavoriteState extends State<Favorite> {
   @override
   Widget build(BuildContext context) {
-    final itemProvider = Provider.of<ItemProvider>(context);
+    final favoriteItems = Provider.of<ItemProvider>(context).items;
 
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100.0),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Customappbar(
-            text: 'My Favorite',
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF2C2F36), // رمادي غامق
+              Color(0xFF1C1C1E), // أسود تقريبًا
+            ],
+            stops: [.0, .9],
+          ),
+        ),
+        child: SafeArea(
+          child: Column(
+            children: [
+              // AppBar
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: Center(
+                  child: Text(
+                    'Favorite',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+
+              // Content
+              Expanded(
+                child: favoriteItems.isEmpty
+                    ? const Center(
+                        child: Text(
+                          '🖤 لا توجد منتجات مفضلة حتى الآن',
+                          style: TextStyle(color: Colors.grey, fontSize: 16),
+                        ),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: GridView.builder(
+                          itemCount: favoriteItems.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 16,
+                            crossAxisSpacing: 16,
+                            childAspectRatio: 0.64,
+                          ),
+                          itemBuilder: (context, index) => FavoriteProductCard(
+                            item: favoriteItems[index],
+                          ),
+                        ),
+                      ),
+              ),
+            ],
           ),
         ),
       ),
-      body: itemProvider.items.isEmpty
-          ? Center(
-              child: Text(
-                'No favorite items',
-                style: TextStyle(fontSize: 18, color: Colors.grey),
-              ),
-            )
-          : GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: .7,
-              ),
-              itemCount: itemProvider.items.length,
-              itemBuilder: (context, index) {
-                final item = itemProvider.items[index];
-
-                return OpenContainer(
-                  transitionType: ContainerTransitionType.fadeThrough,
-                  closedColor: Colors.transparent,
-                  closedElevation: 0.0,
-                  openElevation: 0.0,
-                  transitionDuration: const Duration(milliseconds: 800),
-                  openBuilder: (context, _) => CustomDetailsScreen(item: item),
-                  closedBuilder: (context, openContainer) {
-                    return GestureDetector(
-                        onTap: openContainer,
-                        child: Customitemfavorite(
-                          item: item,
-                        ));
-                  },
-                );
-              },
-            ),
     );
   }
 }

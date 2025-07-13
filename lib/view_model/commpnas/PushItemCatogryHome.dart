@@ -15,8 +15,8 @@ class Pushitemcatogryhome extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          FoodCubit()..fetchCategoryData(tableName, uniqueId: uniqueId),
-      child: BlocBuilder<FoodCubit, FoodState>(
+      AppCubit()..fetchCategoryData(tableName, uniqueId: uniqueId),
+      child: BlocBuilder<AppCubit, AppState>(
         builder: (context, state) {
           if (state is CategoryLoadingState) {
             return const Center(child: CircularProgressIndicator());

@@ -6,8 +6,6 @@ import 'package:food_app/viwes/wedget/CustomAppBar.dart';
 import '../../model/cubit/item.dart';
 import '../../view_model/commpnas/PushItemCatogryHome.dart';
 import '../../view_model/commpnas/color.dart';
-import '../wedget/CustomRowHome.dart';
-import '../wedget/TheBesrCatogary.dart';
 
 class HomeLayout extends StatelessWidget {
   const HomeLayout({super.key});

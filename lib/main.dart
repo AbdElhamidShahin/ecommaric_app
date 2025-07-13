@@ -31,8 +31,8 @@ void main() async {
         ChangeNotifierProvider(
             create: (context) => ThemeProvider()), // Add ThemeProvider
       ],
-      child: BlocProvider<FoodCubit>(
-        create: (context) => FoodCubit()..getCategories(),
+      child: BlocProvider<AppCubit>(
+        create: (context) => AppCubit()..getCategories(),
         child: MyApp(), // Main app widget
       ),
     ),

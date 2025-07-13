@@ -69,6 +69,14 @@ const Gradient ColorTextBottom = LinearGradient(
     Color(0xFF212226),
   ],
   stops: [.0, .9],
+);const Gradient ColorItemsFavorite = LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,// يبدأ من أعلى اليسار
+  colors: [
+    Color(0xFF2F3137),
+    Color(0xFF212226),
+  ],
+  stops: [.0, .7],
 );
 const Color colorBasic = Color(0xFFFFCB8D);
 const Color colorA = Color(0xFFA74138);

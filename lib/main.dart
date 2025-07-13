@@ -12,28 +12,25 @@ import 'viwes/screens/Home LoginScreen.dart';
 import 'view_model/commpnas/helper/ThemeProvider.dart';
 
 void main() async {
-  // debugPaintSizeEnabled = true; // ← بتفعل وضع تحديد العناصر
-
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
-  // FirebaseAuth.instance.setSettings(appVerificationDisabledForTesting: true);
+
   await Supabase.initialize(
     url: 'https://wdbxjlxggqnauhzbjofr.supabase.co',
-    anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndkYnhqbHhnZ3FuYXVoemJqb2ZyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4MDM0OTIsImV4cCI6MjA2NzM3OTQ5Mn0.tRIpIrnpcvDYgOnCgxHKd8tKLb60MfPnM6fK382xRbM',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndkYnhqbHhnZ3FuYXVoemJqb2ZyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4MDM0OTIsImV4cCI6MjA2NzM3OTQ5Mn0.tRIpIrnpcvDYgOnCgxHKd8tKLb60MfPnM6fK382xRbM',
   );
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ItemProvider()),
-        ChangeNotifierProvider(create: (context) => ItemCard()),
-
         ChangeNotifierProvider(
-            create: (context) => ThemeProvider()), // Add ThemeProvider
+          create: (context) => ItemCard()..loadCard(),
+        ),
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
       ],
-      child: BlocProvider<AppCubit>(
+      child: BlocProvider(
         create: (context) => AppCubit()..getCategories(),
-        child: MyApp(), // Main app widget
+        child: const MyApp(),
       ),
     ),
   );
@@ -45,25 +42,28 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: appBackgroundGradient,
+
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: Colors.transparent,
       ),
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          brightness: Brightness.light,
-        ),
-        darkTheme: ThemeData(
-          brightness: Brightness.dark,
-        ),
-        themeMode: themeProvider.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-        debugShowCheckedModeBanner: false,
-        home: HomePage(),
-        routes: {
-          '/account': (context) => AccountScreen(),
-        },
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: Colors.transparent,
       ),
+      themeMode: themeProvider.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+      debugShowCheckedModeBanner: false,
+      home: Container(
+        decoration: const BoxDecoration(
+          gradient: appBackgroundGradient,
+        ),
+        child: const HomePage(),
+      ),
+      routes: {
+        '/account': (context) => const AccountScreen(),
+      },
     );
   }
 }

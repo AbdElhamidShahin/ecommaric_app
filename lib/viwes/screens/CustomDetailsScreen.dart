@@ -8,18 +8,34 @@ import 'package:provider/provider.dart';
 
 import '../../model/cubit/ItemProvider.dart';
 import '../wedget/CustomTextButton.dart';
+import '../wedget/customCardItem.dart';
 
-class CustomDetailsScreen extends StatelessWidget {
+class CustomDetailsScreen extends StatefulWidget {
   final Item item;
 
   const CustomDetailsScreen({super.key, required this.item});
 
+  @override
+  State<CustomDetailsScreen> createState() => _CustomDetailsScreenState();
+}
 
+class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
 
+  int currentQuantity = 5; // ✅ هنا الصح
+
+  @override
+  void initState() {
+    super.initState();
+    final itemCard = Provider.of<ItemCard>(context, listen: false);
+    currentQuantity = itemCard.getQuantity(widget.item);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    final itemCard = Provider.of<ItemCard>(context);
+    final quantity = itemCard.getQuantity(widget.item);
+
+  return Expanded(
       child: Scaffold(
         body: Container(
           decoration: BoxDecoration(
@@ -36,7 +52,7 @@ class CustomDetailsScreen extends StatelessWidget {
                   borderRadius:
                       const BorderRadius.vertical(bottom: Radius.circular(16)),
                   child: Image.network(
-                    item.imageUrl,
+                    widget.item.imageUrl,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
                       return Image.asset(
@@ -65,7 +81,7 @@ class CustomDetailsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        item.name,
+                        widget.item.name,
                         style: TextStyle(
                           fontSize: 32,
                           color: Colors.white
@@ -76,45 +92,31 @@ class CustomDetailsScreen extends StatelessWidget {
                       SizedBox(
                         height: 12,
                       ),
+
+
+
+
+                      Row(
+                        children: [
+                          Text(
+                            "\$${(widget.item.price)}",
+                            style: TextStyle(
+                              fontSize: 28,
+                              color: Colors.white
+                                  .withOpacity(0.85), // ← أفتح من white70
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Spacer(),
                       QuantitySelector(
-                        price: double.parse(item.price), // أو item.price لو هو double
+                        price: double.parse(widget.item.price),
+                        quantity: quantity, // القيمة المبدئية
                         onChanged: (newCount) {
-                          // اعمل اللي تحبه هنا لما العدد يتغير
-                          print("عدد العناصر: $newCount");
+                          Provider.of<ItemCard>(context, listen: false).updateQuantity(widget.item, newCount);
                         },
                       ),
-
-                      // Row(
-                      //   children: [
-                      //     Text(
-                      //       "\$${(item.price)}",
-                      //       style: TextStyle(
-                      //         fontSize: 32,
-                      //         color: Colors.white
-                      //             .withOpacity(0.85), // ← أفتح من white70
-                      //         fontWeight: FontWeight.bold,
-                      //       ),
-                      //     ),
-                      //     Spacer(),
-                      //     Row(
-                      //       mainAxisSize: MainAxisSize.min,
-                      //       children: [
-                      //         buildButton(Icons.add, () {
-                      //           setState(() {
-                      //             count++;
-                      //           });
-                      //         }),
-                      //         buildNumber(count, 16, 10,
-                      //             28), // ← ضبط حجم الخط حسب الحاجة
-                      //         buildButton(Icons.remove, () {
-                      //           setState(() {
-                      //             if (count > 1) count--;
-                      //           });
-                      //         }),
-                      //       ],
-                      //     ),
-                      //   ],
-                      // ),
+                        ],
+                      ),
                       Row(
                         children: [
                           Icon(
@@ -123,7 +125,7 @@ class CustomDetailsScreen extends StatelessWidget {
                             color: Colors.orangeAccent,
                           ),
                           Text(
-                            "${item.rating}",
+                            "${widget.item.rating}",
                             style: TextStyle(color: Colors.white, fontSize: 24),
                           ),
                           SizedBox(
@@ -147,9 +149,9 @@ class CustomDetailsScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${item.description}',
+                                '${widget.item.description}',
                                 style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 20,
                                   color: Colors.white54,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -166,16 +168,17 @@ class CustomDetailsScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           BuildFavoriteIcon(
-                            item: item,
+                            item: widget.item,
                           ),
                           Spacer(),
                           CustomTextButton(
 
 
+                            quantity: currentQuantity,
 
 
 
-                     item: item,
+                     item: widget.item,
                             horizontal:60,
                             vertical: 18,
                             fontSize: 28,

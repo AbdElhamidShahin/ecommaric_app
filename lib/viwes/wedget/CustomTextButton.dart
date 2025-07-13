@@ -4,19 +4,19 @@ import 'package:provider/provider.dart';
 import '../../model/cubit/ItemProvider.dart';
 import '../../model/cubit/item.dart';
 import '../../view_model/commpnas/color.dart';
-import '../../view_model/commpnas/helper/buildNumber.dart';
 
 class CustomTextButton extends StatefulWidget {
   final Item item;
   final double horizontal;
   final double fontSize;
-  final double vertical;
+  final double vertical;  final int quantity; // ← أضف هذا السطر
+
   const CustomTextButton({
     super.key,
     required this.item,
     required this.horizontal,
     required this.vertical,
-    required this.fontSize,
+    required this.fontSize,  this.quantity =1,
   });
 
   @override
@@ -56,7 +56,8 @@ class _CustomTextButtonState extends State<CustomTextButton> {
         ),
         onPressed: () {
           Provider.of<ItemCard>(context, listen: false)
-              .addCard(widget.item, count);
+              .addCard(widget.item, widget.quantity); // ← استخدم الكمية الصح
+
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('تمت إضافة المنتج إلى السلة!'),
@@ -64,6 +65,7 @@ class _CustomTextButtonState extends State<CustomTextButton> {
             ),
           );
         },
+
         child: Center(
           child: Text(
             "Add to bag",

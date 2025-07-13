@@ -132,15 +132,15 @@ class _AccountScreenState extends State<AccountScreen> {
             SizedBox(
               height: 24,
             ),
-            CustomItemSetteings('الطلبات', () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Cardscreen(
-                          items: [],
-                        )),
-              );
-            }),
+            // CustomItemSetteings('الطلبات', () {
+            //   Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //         builder: (context) => Cardscreen(
+            //               items: [],
+            //             )),
+            //   );
+            // }),
             CustomItemSetteings('العناوين', () {}),
             CustomItemSetteings('المفضله', () {
               Navigator.push(

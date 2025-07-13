@@ -48,19 +48,18 @@ class ItemCard with ChangeNotifier {
   List<Item> get items => _items;
 
   void addCard(Item item, int quantity) {
-    print('Adding item: ${item.id}, Quantity: $quantity'); // Debugging
-    if (_items.any((element) => element.id == item.id)) {
-      print('Item already exists, updating quantity'); // Debugging
-      _itemQuantities[item.id] = _itemQuantities[item.id]! + quantity;
-    } else {
-      print('Adding new item'); // Debugging
-      _items.add(item);
-      _itemQuantities[item.id] = quantity;
-    }
+    _items.add(item);
+    _itemQuantities[item.id] = quantity; // 👈 أضف هذا السطر
     _saveCard();
     notifyListeners();
   }
-
+  void updateQuantity(Item item, int newQuantity) {
+    if (_itemQuantities.containsKey(item.id)) {
+      _itemQuantities[item.id] = newQuantity;
+      _saveCard();
+      notifyListeners();
+    }
+  }
   void removeCard(Item item) {
     _items.removeWhere((element) => element.id == item.id);
     _itemQuantities.remove(item.id);
@@ -87,6 +86,21 @@ class ItemCard with ChangeNotifier {
       'quantities': _itemQuantities,
     });
     await prefs.setString('Card_items', data);
+  }
+  Future<void> loadCard() async {
+    final prefs = await SharedPreferences.getInstance();
+    final data = prefs.getString('Card_items');
+
+    if (data != null) {
+      final decoded = jsonDecode(data);
+      final List<dynamic> itemsJson = decoded['items'];
+      _items = itemsJson.map((e) => Item.fromJson(e)).toList();
+
+      final Map<String, dynamic> quantities = Map<String, dynamic>.from(decoded['quantities']);
+      _itemQuantities = quantities.map((key, value) => MapEntry(key, value as int));
+
+      notifyListeners();
+    }
   }
 
 

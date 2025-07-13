@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> bottomScreens = [
     HomeLayout(),
     FavoriteScreen(),
-    Cardscreen(items: []),
+    Cardscreen(),
     AccountScreen(),
   ];
 

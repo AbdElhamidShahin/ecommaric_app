@@ -22,21 +22,21 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> bottomScreens = [
     HomeLayout(),
     FavoriteScreen(),
-    Cardscreen(),
+    CartScreen(),
     AccountScreen(),
   ];
 
   final activeIcons = [
     'assets/icons/home1.svg',
     'assets/icons/bookmark1.svg',
-    'assets/icons/bell1.svg',
+    'assets/icons/shopping-bag-svgrepo-com (1).svg',
     'assets/icons/user1.svg',
   ];
 
   final inactiveIcons = [
     'assets/icons/home.svg',
     'assets/icons/bookmark.svg',
-    'assets/icons/bell.svg',
+    'assets/icons/shopping-bag-svgrepo-com.svg',
     'assets/icons/user.svg',
   ];
 
@@ -50,7 +50,11 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       currentIndex = index;
     });
-    pageController.jumpToPage(index);
+    pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
@@ -101,7 +105,8 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: List.generate(activeIcons.length, (index) {
                   final isSelected = currentIndex == index;
-                  final iconPath = isSelected ? activeIcons[index] : inactiveIcons[index];
+                  final iconPath =
+                      isSelected ? activeIcons[index] : inactiveIcons[index];
 
                   return GestureDetector(
                     onTap: () => changeTab(index),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:food_app/model/cubit/item.dart';
 import 'package:food_app/view_model/commpnas/color.dart';
-import 'package:food_app/view_model/commpnas/helper/buildNumber.dart';
+import 'package:food_app/view_model/commpnas/helper/QuantitySelector.dart';
 import 'package:food_app/viwes/wedget/buildFavoriteIcon.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +20,6 @@ class CustomDetailsScreen extends StatefulWidget {
 }
 
 class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
-
   int currentQuantity = 5; // ✅ هنا الصح
 
   @override
@@ -35,7 +34,7 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
     final itemCard = Provider.of<ItemCard>(context);
     final quantity = itemCard.getQuantity(widget.item);
 
-  return Expanded(
+    return Expanded(
       child: Scaffold(
         body: Container(
           decoration: BoxDecoration(
@@ -51,15 +50,16 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                 child: ClipRRect(
                   borderRadius:
                       const BorderRadius.vertical(bottom: Radius.circular(16)),
-                  child: Image.network(
-                    widget.item.imageUrl,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Image.asset(
-                        'assets/imagesFood/download.png',
-                        fit: BoxFit.cover,
-                      );
-                    },
+                  child: Hero(
+                    tag: 'itemImage-${widget.item.id}',
+                    child: Image.network(
+                      widget.item.imageUrl,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset('assets/imagesFood/download.png',
+                            fit: BoxFit.cover);
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -92,10 +92,6 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                       SizedBox(
                         height: 12,
                       ),
-
-
-
-
                       Row(
                         children: [
                           Text(
@@ -108,13 +104,14 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                             ),
                           ),
                           Spacer(),
-                      QuantitySelector(
-                        price: double.parse(widget.item.price),
-                        quantity: quantity, // القيمة المبدئية
-                        onChanged: (newCount) {
-                          Provider.of<ItemCard>(context, listen: false).updateQuantity(widget.item, newCount);
-                        },
-                      ),
+                          QuantitySelector(
+                            price: double.parse(widget.item.price),
+                            quantity: quantity, // القيمة المبدئية
+                            onChanged: (newCount) {
+                              Provider.of<ItemCard>(context, listen: false)
+                                  .updateQuantity(widget.item, newCount);
+                            },
+                          ),
                         ],
                       ),
                       Row(
@@ -172,19 +169,11 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                           ),
                           Spacer(),
                           CustomTextButton(
-
-
                             quantity: currentQuantity,
-
-
-
-                     item: widget.item,
-                            horizontal:60,
+                            item: widget.item,
+                            horizontal: 60,
                             vertical: 18,
                             fontSize: 28,
-
-
-
                           )
                         ],
                       ),

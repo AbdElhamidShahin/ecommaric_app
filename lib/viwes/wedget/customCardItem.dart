@@ -3,13 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:food_app/model/cubit/item.dart';
 import 'package:food_app/model/cubit/ItemProvider.dart';
 
-import '../../view_model/commpnas/color.dart';
 
-class Customcarditem extends StatelessWidget {
+class CustomCardItem extends StatelessWidget {
   final Item item;
   final int quantity;
 
-  const Customcarditem({
+  const CustomCardItem({
     super.key,
     required this.item,
     required this.quantity,
@@ -18,40 +17,51 @@ class Customcarditem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        color: const Color(0xFF1E1F23),
+        borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.shade200,
-            blurRadius: 6,
-            offset: const Offset(0, 2),
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
           ),
         ],
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // صورة المنتج
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.network(
-              item.imageUrl,
-              width: 80,
-              height: 80,
-              fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => Container(
-                width: 80,
-                height: 80,
-                color: Colors.grey[200],
-                child: const Icon(Icons.fastfood),
+          Container(
+            width: 90,
+            height: 90,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFF2C2F36), Color(0xFF1A1B1D)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Image.network(
+                item.imageUrl,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => Icon(
+                  Icons.broken_image,
+                  color: Colors.grey.shade700,
+                  size: 38,
+                ),
               ),
             ),
           ),
-          const SizedBox(width: 12),
 
-          // التفاصيل
+          const SizedBox(width: 16),
+
+          // تفاصيل المنتج
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,135 +69,137 @@ class Customcarditem extends StatelessWidget {
                 Text(
                   item.name,
                   style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white,
+                  ),
+                  maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  '${(double.parse(item.price) * quantity).toStringAsFixed(2)} EGP',
-                  style: TextStyle(color: Colors.grey.shade700),
+                  '\$${(double.parse(item.price) * quantity).toStringAsFixed(2)}',
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  '\$${item.price} each',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey.shade500,
+                  ),
                 ),
               ],
             ),
           ),
 
-          // التعديل و الحذف
+          // أدوات التحكم
           Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              IconButton(
-                onPressed: () {
-                  Provider.of<ItemCard>(context, listen: false)
-                      .removeCard(item);
-                },
-                icon: const Icon(Icons.delete, color: Colors.red),
+              // زر الحذف بتصميم دائري وشفاف
+              Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white.withOpacity(0.08),
+                ),
+                child: IconButton(
+                  onPressed: () => _removeItem(context),
+                  icon: const Icon(Icons.delete_outline),
+                  color: Colors.white70,
+                  splashRadius: 22,
+                ),
               ),
-              QuantitySelector(
-                price: double.parse(item.price),
-                quantity: quantity, // القيمة المبدئية
-                onChanged: (newCount) {
-                  Provider.of<ItemCard>(context, listen: false).updateQuantity(item, newCount);
-                },
-              ),
+              const SizedBox(height: 10),
 
+              // وحدة التحكم بالكمية بتصميم راقي
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: const Color(0xFF2F3136),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.15),
+                      blurRadius: 4,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    // زر -
+                    InkWell(
+                      onTap: () => _updateQuantity(context, quantity - 1),
+                      borderRadius: BorderRadius.circular(20),
+                      child: const Padding(
+                        padding: EdgeInsets.all(6),
+                        child: Icon(Icons.remove, color: Colors.white, size: 18),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    // القيمة
+                    Text(
+                      quantity.toString(),
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    // زر +
+                    InkWell(
+                      onTap: () => _updateQuantity(context, quantity + 1),
+                      borderRadius: BorderRadius.circular(20),
+                      child: const Padding(
+                        padding: EdgeInsets.all(6),
+                        child: Icon(Icons.add, color: Colors.white, size: 18),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ],
       ),
-    );
-  }
-}
-
-
-class QuantitySelector extends StatefulWidget {
-  final double price;
-  final int quantity;
-  final ValueChanged<int> onChanged;
-
-  const QuantitySelector({
-    super.key,
-    required this.price,
-    required this.quantity,
-    required this.onChanged,
-  });
-
-  @override
-  State<QuantitySelector> createState() => _QuantitySelectorState();
-}
-
-class _QuantitySelectorState extends State<QuantitySelector> {
-  late int count;
-
-  @override
-  void initState() {
-    super.initState();
-    count = widget.quantity;
+    )
+;
   }
 
-  void increment() {
-    setState(() {
-      count++;
-    });
-    widget.onChanged(count);
+  void _removeItem(BuildContext context) {
+    Provider.of<ItemCard>(context, listen: false).removeCard(item);
+    _showRemovalSnackbar(context);
   }
 
-  void decrement() {
-    if (count > 1) {
-      setState(() {
-        count--;
-      });
-      widget.onChanged(count);
-    }
+  void _updateQuantity(BuildContext context, int newQuantity) {
+    if (newQuantity <= 0) return;
+    Provider.of<ItemCard>(context, listen: false)
+        .updateQuantity(item, newQuantity);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        // زر -
-        InkWell(
-          onTap: count > 1 ? decrement : null,
-          borderRadius: BorderRadius.circular(20),
-          child: Container(
-            height: 45,
-            width: 45,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              gradient: count > 1
-                  ? ColorTextBottom
-                  : LinearGradient(colors: [Colors.grey, Colors.grey.shade400]),
-            ),
-            child: const Icon(Icons.remove, size: 28, color: Colors.white),
-          ),
+  void _showRemovalSnackbar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.grey.shade900,
+        content: Text(
+          'Removed ${item.name}',
+          style: const TextStyle(color: Colors.white),
         ),
-
-        // العدد
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Text(
-            '$count',
-            style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
-            ),
-          ),
+        action: SnackBarAction(
+          label: 'UNDO',
+          textColor: Colors.white,
+          onPressed: () {
+            Provider.of<ItemCard>(context, listen: false)
+                .addCard(item, quantity);
+          },
         ),
-
-        // زر +
-        InkWell(
-          onTap: increment,
-          borderRadius: BorderRadius.circular(20),
-          child: Container(
-            height: 45,
-            width: 45,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              gradient: ColorTextBottom,
-            ),
-            child: const Icon(Icons.add, size: 28, color: Colors.white),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

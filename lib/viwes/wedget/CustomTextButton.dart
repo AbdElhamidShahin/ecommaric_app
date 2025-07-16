@@ -60,10 +60,40 @@ class _CustomTextButtonState extends State<CustomTextButton> {
 
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('تمت إضافة المنتج إلى السلة!'),
-              duration: Duration(seconds: 2),
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              duration: const Duration(seconds: 2),
+              content: Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF4CAF50), Color(0xFF81C784)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.check_circle, color: Colors.white, size: 28),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        'تمت إضافة المنتج إلى السلة!',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           );
+
         },
 
         child: Center(

@@ -20,20 +20,40 @@ class Pushitemcatogry extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-      AppCubit()..fetchCategoryData(tableName, uniqueId: uniqueId),
+          AppCubit()..fetchCategoryData(tableName, uniqueId: uniqueId),
       child: BlocBuilder<AppCubit, AppState>(
         builder: (context, state) {
           if (state is CategoryLoadingState) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is CategoryError) {
-            return Center(child: Text(state.message));
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.wifi_off_rounded,
+                    color: Colors.redAccent.shade100,
+                    size: 80,
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    "No Internet Connection",
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+
+                ],
+              ),
+            );
           } else if (state is CategoryLoaded) {
             if (state.tableName == tableName && state.uniqueId == uniqueId) {
               final items = state.items;
               if (items.isEmpty) {
                 return const Center(child: Text('لا توجد عناصر متاحة'));
               }
-
               return PageView.builder(
                 controller: PageController(viewportFraction: 1),
                 itemCount: items.length,
@@ -45,9 +65,6 @@ class Pushitemcatogry extends StatelessWidget {
                   );
                 },
               );
-
-
-
             } else {
               return const SizedBox.shrink();
             }

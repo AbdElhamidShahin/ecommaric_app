@@ -14,13 +14,13 @@ class FavoriteScreen extends StatelessWidget {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
             colors: [
-              Color(0xFF2C2F36), // رمادي غامق
+              Color(0xFF24262B), // رمادي غامق
               Color(0xFF1C1C1E), // أسود تقريبًا
             ],
-            stops: [.0, .9],
+            stops: [.0, .6],
           ),
         ),
         child: SafeArea(
@@ -46,7 +46,7 @@ class FavoriteScreen extends StatelessWidget {
                 child: favoriteItems.isEmpty
                     ? const Center(
                         child: Text(
-                          '🖤 لا توجد منتجات مفضلة حتى الآن',
+                          '🖤 There are no favorite products yet.',
                           style: TextStyle(color: Colors.grey, fontSize: 16),
                         ),
                       )

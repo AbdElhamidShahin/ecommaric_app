@@ -1,10 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:food_app/view_model/commpnas/helper/LocalStorageAccount.dart';
-import 'package:food_app/viwes/screens/EditAccuntScreeen.dart';
 import 'package:food_app/viwes/screens/Favorite_Screen.dart';
-import 'package:food_app/viwes/screens/Home%20LoginScreen.dart';
-import 'package:food_app/viwes/screens/cardScreen.dart';
 import 'package:food_app/viwes/wedget/CustomItemSetteings.dart';
 import 'package:provider/provider.dart';
 import '../../view_model/commpnas/color.dart';
@@ -21,22 +17,6 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   String? name, phone, email, image;
-
-  @override
-  void initState() {
-    super.initState();
-    loadUserData();
-  }
-
-  Future<void> loadUserData() async {
-    Map<String, String?> userData = await UserDataManager.loadUserData();
-    setState(() {
-      name = userData['name'];
-      email = userData['email'];
-      phone = userData['phone'];
-      image = userData['imagePath'];
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +89,8 @@ class _AccountScreenState extends State<AccountScreen> {
                               color: colorA)),
                     ],
                   ),
-                ),Spacer(),
+                ),
+                Spacer(),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(150),
                   child: image != null && File(image!).existsSync()
@@ -126,7 +107,9 @@ class _AccountScreenState extends State<AccountScreen> {
                           fit: BoxFit.cover,
                         ),
                 ),
-                SizedBox(width: 8,),
+                SizedBox(
+                  width: 8,
+                ),
               ],
             ),
             SizedBox(

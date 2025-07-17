@@ -2,7 +2,7 @@ import 'package:food_app/model/cubit/item.dart';
 
 abstract class AppState {}
 
-class TravelInitialState extends AppState {}
+class AppInitialState  extends AppState {}
 
 class TravelBottomnavBarState extends AppState {}
 
@@ -39,3 +39,4 @@ class FoodCountState extends AppState {
 }
 
 class CategoryInitial extends AppState {}
+class AppChangeTabState extends AppState {}

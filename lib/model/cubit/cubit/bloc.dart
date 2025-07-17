@@ -5,14 +5,48 @@ import 'package:food_app/viwes/screens/Account_Screen.dart';
 import 'package:food_app/viwes/screens/cardScreen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:food_app/model/cubit/item.dart';
-import '../../../viwes/screens/CatogaryScreen.dart';
 import '../../../viwes/screens/Favorite_Screen.dart';
 import '../../../viwes/screens/Home_Layout.dart';
 
 class AppCubit extends Cubit<AppState> {
-  AppCubit() : super((TravelInitialState()));
+  AppCubit() : super((AppInitialState ()));
 
   static AppCubit get(context) => BlocProvider.of<AppCubit>(context);
+
+  int currentIndex = 0;
+  late PageController pageController;
+
+  final List<Widget> bottomScreens = [
+    HomeLayout(),
+    FavoriteScreen(),
+    CartScreen(),
+    ProfileScreen(),
+  ];
+
+  final activeIcons = [
+    'assets/icons/home1.svg',
+    'assets/icons/bookmark1.svg',
+    'assets/icons/shopping-bag-svgrepo-com (1).svg',
+    'assets/icons/user1.svg',
+  ];
+
+  final inactiveIcons = [
+    'assets/icons/home.svg',
+    'assets/icons/bookmark.svg',
+    'assets/icons/shopping-bag-svgrepo-com.svg',
+    'assets/icons/user.svg',
+  ];
+
+  void changeTab(int index) {
+    currentIndex = index;
+    pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+
+    emit(AppChangeTabState());
+  }
 
   Future<void> fetchCategoryData(String tableName, {String? uniqueId}) async {
     try {

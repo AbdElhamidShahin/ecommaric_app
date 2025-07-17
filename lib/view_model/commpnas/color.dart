@@ -28,7 +28,6 @@ const Gradient ColorItem = RadialGradient(
   stops: [0.0, 0.8],
 );
 
-
 const Gradient ColorItemFavorite = LinearGradient(
   begin: Alignment.topLeft, // يبدأ من أعلى اليسار
   end: Alignment.bottomRight,
@@ -38,10 +37,6 @@ const Gradient ColorItemFavorite = LinearGradient(
   ],
   stops: [0.0, 0.8],
 );
-
-
-
-
 
 const Gradient ColorBest = RadialGradient(
   center: Alignment.centerLeft,
@@ -63,15 +58,16 @@ const Gradient ColorBestCountinar = RadialGradient(
 );
 const Gradient ColorTextBottom = LinearGradient(
   begin: Alignment.topCenter,
-  end: Alignment.bottomCenter,// يبدأ من أعلى اليسار
+  end: Alignment.bottomCenter, // يبدأ من أعلى اليسار
   colors: [
     Color(0xFF34363D),
     Color(0xFF212226),
   ],
   stops: [.0, .9],
-);const Gradient ColorItemsFavorite = LinearGradient(
+);
+const Gradient ColorItemsFavorite = LinearGradient(
   begin: Alignment.topCenter,
-  end: Alignment.bottomCenter,// يبدأ من أعلى اليسار
+  end: Alignment.bottomCenter, // يبدأ من أعلى اليسار
   colors: [
     Color(0xFF2F3137),
     Color(0xFF212226),

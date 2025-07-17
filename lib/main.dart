@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_app/model/cubit/ItemProvider.dart';
 import 'package:food_app/model/cubit/cubit/bloc.dart';
-import 'package:food_app/viwes/screens/Account_Screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'view_model/commpnas/helper/ThemeProvider.dart';
 
@@ -15,7 +14,8 @@ void main() async {
 
   await Supabase.initialize(
     url: 'https://wdbxjlxggqnauhzbjofr.supabase.co',
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndkYnhqbHhnZ3FuYXVoemJqb2ZyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4MDM0OTIsImV4cCI6MjA2NzM3OTQ5Mn0.tRIpIrnpcvDYgOnCgxHKd8tKLb60MfPnM6fK382xRbM',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndkYnhqbHhnZ3FuYXVoemJqb2ZyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE4MDM0OTIsImV4cCI6MjA2NzM3OTQ5Mn0.tRIpIrnpcvDYgOnCgxHKd8tKLb60MfPnM6fK382xRbM',
   );
 
   runApp(
@@ -60,9 +60,6 @@ class MyApp extends StatelessWidget {
         ),
         child: const HomePage(),
       ),
-      routes: {
-        '/account': (context) => const AccountScreen(),
-      },
     );
   }
 }

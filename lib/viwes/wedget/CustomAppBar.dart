@@ -19,15 +19,7 @@ class Customappbar extends StatelessWidget {
                     fontSize: 24,
                     fontWeight: FontWeight.bold),
               ),
-              Spacer(),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.shopping_bag_outlined,
-                  size: 28,
-                  color: Colors.white,
-                ),
-              )
+
             ],
           ),
         ),

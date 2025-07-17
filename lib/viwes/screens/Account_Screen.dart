@@ -1,179 +1,82 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:food_app/viwes/screens/Favorite_Screen.dart';
-import 'package:food_app/viwes/wedget/CustomItemSetteings.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/cupertino.dart';
+
 import '../../view_model/commpnas/color.dart';
-import '../../view_model/commpnas/helper/ThemeProvider.dart';
 
-class AccountScreen extends StatefulWidget {
-  const AccountScreen({
-    super.key,
-  });
-
-  @override
-  State<AccountScreen> createState() => _AccountScreenState();
-}
-
-class _AccountScreenState extends State<AccountScreen> {
-  String? name, phone, email, image;
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    final isDarkMode = themeProvider.isDarkMode;
-
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.arrow_forward_ios_rounded,
-                color: colorA,
-                size: 24,
-              ))
-        ],
-        // leading: IconButton(
-        //     onPressed: () async {
-        //       final result = await Navigator.push(
-        //         context,
-        //         MaterialPageRoute(builder: (context) => EditAccountScreen()),
-        //       );
-        //       if (result == true) {
-        //         await loadUserData();
-        //       }
-        //     },
-        //     icon: const Icon(
-        //       Icons.edit_note,
-        //       color: colorA,
-        //       size: 32,
-        //     )),
-        title: const Center(
-            child: Text(
-          'حسابي',
-          style: TextStyle(color: colorA, fontWeight: FontWeight.bold),
-        )),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: appBackgroundGradient,
       ),
-      body: SingleChildScrollView(
-        child: Column(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: const Text(
+            'Profile',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
+        ),
+        body: Column(
           children: [
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text("${name ?? 'غير محدد'} :الاسم",
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              color: colorA)),
-                      const SizedBox(
-                        height: 6,
-                      ),
-                      Text("${phone ?? 'غير محدد'} :رقم الهاتف",
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              color: colorA)),
-                      const SizedBox(
-                        height: 6,
-                      ),
-                      Text("${email ?? 'غير محدد'} :الايميل",
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              color: colorA)),
-                    ],
-                  ),
-                ),
-                Spacer(),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(150),
-                  child: image != null && File(image!).existsSync()
-                      ? Image.file(
-                          File(image!),
-                          width: 160,
-                          height: 160,
-                          fit: BoxFit.cover,
-                        )
-                      : Image.network(
-                          'https://img.freepik.com/premium-vector/avatar-business-women-vector-illustration-flat-2_764382-57434.jpg',
-                          width: 160,
-                          height: 160,
-                          fit: BoxFit.cover,
-                        ),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-              ],
+            const SizedBox(height: 16),
+
+            // صورة المستخدم + الاسم
+            CircleAvatar(
+              radius: 50,
+              backgroundImage: AssetImage(
+                  'assets/icons/boy-with-blue-hoodie-blue-hoodie-with-hoodie-it_1230457-42660.avif'), // صورة محلية أو Network
             ),
-            SizedBox(
-              height: 24,
+            const SizedBox(height: 12),
+            const Text(
+              'Abdo Shahin',
+              style: TextStyle(color: Colors.white, fontSize: 24),
             ),
-            // CustomItemSetteings('الطلبات', () {
-            //   Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (context) => Cardscreen(
-            //               items: [],
-            //             )),
-            //   );
-            // }),
-            CustomItemSetteings('العناوين', () {}),
-            CustomItemSetteings('المفضله', () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => FavoriteScreen()),
-              );
-            }),
-            CustomItemSetteings('الاشعارات', () {}),
-            CustomItemSetteings('اللغات', () {}),
-            CustomItemSetteings('تغيير كلمه المرور', () {}),
-            CustomItemSetteings('تسجيل الخروج', () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => Home_loginscreen()),
-              // );
-            }),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+            const SizedBox(height: 4),
+            const Text(
+              'AbdoShahin@gmail.com',
+              style: TextStyle(color: Colors.grey, fontSize: 18),
+            ),
+            const SizedBox(height: 24),
+
+            // القائمة
+            Expanded(
+              child: ListView(
                 children: [
-                  Switch(
-                    value: isDarkMode,
-                    onChanged: (value) {
-                      themeProvider.toggleTheme();
-                    },
-                  ),
-                  Spacer(),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      isDarkMode ? 'Dark Mode' : 'Light Mode',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                          color: colorB),
-                    ),
-                  ),
-                  Container(
-                    height: 24,
-                    width: 24,
-                    decoration: BoxDecoration(
-                        color: colorB, borderRadius: BorderRadius.circular(20)),
-                  ),
+                  buildSettingTile(Icons.edit, 'Edit Profile'),
+                  buildSettingTile(Icons.notifications_none, 'Notifications'),
+                  buildSettingTile(Icons.favorite_border, 'Favorites'),
+                  buildSettingTile(Icons.language, 'Language'),
+                  buildSettingTile(Icons.support_agent, 'Support'),
+                  buildSettingTile(Icons.logout, 'Logout',
+                      iconColor: Colors.red),
                 ],
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildSettingTile(IconData icon, String title,
+      {Color iconColor = Colors.white}) {
+    return ListTile(
+      leading: Icon(icon, color: iconColor,size: 32,),
+      title: Text(
+        title,
+        style: TextStyle(color: Colors.white, fontSize: 22),
+      ),
+      trailing:
+          const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 24),
+      onTap: () {
+        // هنا تقدر تضيف التنقل لأي صفحة
+      },
     );
   }
 }

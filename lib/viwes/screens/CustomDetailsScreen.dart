@@ -5,34 +5,21 @@ import 'package:food_app/view_model/commpnas/color.dart';
 import 'package:food_app/view_model/commpnas/helper/QuantitySelector.dart';
 import 'package:food_app/viwes/wedget/buildFavoriteIcon.dart';
 import 'package:provider/provider.dart';
-
 import '../../model/cubit/ItemProvider.dart';
 import '../wedget/CustomTextButton.dart';
-import '../wedget/customCardItem.dart';
 
-class CustomDetailsScreen extends StatefulWidget {
+class CustomDetailsScreen extends StatelessWidget {
   final Item item;
 
-  const CustomDetailsScreen({super.key, required this.item});
+   CustomDetailsScreen({super.key, required this.item});
 
-  @override
-  State<CustomDetailsScreen> createState() => _CustomDetailsScreenState();
-}
-
-class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
   int currentQuantity = 5; // ✅ هنا الصح
 
-  @override
-  void initState() {
-    super.initState();
-    final itemCard = Provider.of<ItemCard>(context, listen: false);
-    currentQuantity = itemCard.getQuantity(widget.item);
-  }
 
   @override
   Widget build(BuildContext context) {
     final itemCard = Provider.of<ItemCard>(context);
-    final quantity = itemCard.getQuantity(widget.item);
+    final quantity = itemCard.getQuantity(item);
 
     return Expanded(
       child: Scaffold(
@@ -51,9 +38,9 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                   borderRadius:
                       const BorderRadius.vertical(bottom: Radius.circular(16)),
                   child: Hero(
-                    tag: 'itemImage-${widget.item.id}',
+                    tag: 'itemImage-${item.id}',
                     child: Image.network(
-                      widget.item.imageUrl,
+                      item.imageUrl,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return Image.asset('assets/imagesFood/download.png',
@@ -81,7 +68,7 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.item.name,
+                        item.name,
                         style: TextStyle(
                           fontSize: 32,
                           color: Colors.white
@@ -95,7 +82,7 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                       Row(
                         children: [
                           Text(
-                            "\$${(widget.item.price)}",
+                            "\$${(item.price)}",
                             style: TextStyle(
                               fontSize: 28,
                               color: Colors.white
@@ -105,11 +92,11 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                           ),
                           Spacer(),
                           QuantitySelector(
-                            price: double.parse(widget.item.price),
+                            price: double.parse(item.price),
                             quantity: quantity, // القيمة المبدئية
                             onChanged: (newCount) {
                               Provider.of<ItemCard>(context, listen: false)
-                                  .updateQuantity(widget.item, newCount);
+                                  .updateQuantity(item, newCount);
                             },
                           ),
                         ],
@@ -122,7 +109,7 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                             color: Colors.orangeAccent,
                           ),
                           Text(
-                            "${widget.item.rating}",
+                            "${item.rating}",
                             style: TextStyle(color: Colors.white, fontSize: 24),
                           ),
                           SizedBox(
@@ -146,7 +133,7 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${widget.item.description}',
+                                '${item.description}',
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.white54,
@@ -165,12 +152,12 @@ class _CustomDetailsScreenState extends State<CustomDetailsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           BuildFavoriteIcon(
-                            item: widget.item,
+                            item: item,
                           ),
                           Spacer(),
                           CustomTextButton(
                             quantity: currentQuantity,
-                            item: widget.item,
+                            item: item,
                             horizontal: 60,
                             vertical: 18,
                             fontSize: 28,

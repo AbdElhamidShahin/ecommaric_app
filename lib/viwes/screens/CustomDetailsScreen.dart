@@ -11,10 +11,9 @@ import '../wedget/CustomTextButton.dart';
 class CustomDetailsScreen extends StatelessWidget {
   final Item item;
 
-   CustomDetailsScreen({super.key, required this.item});
+  CustomDetailsScreen({super.key, required this.item});
 
-  int currentQuantity = 5; // ✅ هنا الصح
-
+  int currentQuantity = 1; // ✅ هنا الصح
 
   @override
   Widget build(BuildContext context) {

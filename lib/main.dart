@@ -4,9 +4,9 @@ import 'package:food_app/view_model/commpnas/color.dart';
 import 'package:food_app/viwes/screens/Home_Page.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_app/model/cubit/ItemProvider.dart';
-import 'package:food_app/model/cubit/cubit/bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'model/cubit/ItemProvider.dart';
+import 'model/cubit/cubit/bloc.dart';
 import 'view_model/commpnas/helper/ThemeProvider.dart';
 
 void main() async {

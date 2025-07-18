@@ -26,7 +26,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:label="قرآننا"
+        android:label="ecommerce"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 

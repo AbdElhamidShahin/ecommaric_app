@@ -19,16 +19,25 @@ class TheBesrCatogary extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadiusGeometry.circular(20),
-
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).push(
-            SlowHeroRoute(
-              builder: (_) => CustomDetailsScreen(item: item),
+            PageRouteBuilder(
+              transitionDuration: Duration(milliseconds: 600),
+              reverseTransitionDuration: Duration(milliseconds: 800),
+              pageBuilder: (_, animation, secondaryAnimation) => CustomDetailsScreen(item: item),
+              transitionsBuilder: (_, animation, secondaryAnimation, child) {
+                return SharedAxisTransition(
+                  animation: animation,
+                  secondaryAnimation: secondaryAnimation,
+                  transitionType: SharedAxisTransitionType.scaled, // أو .horizontal أو .vertical
+                  child: child,
+                );
+              },
             ),
           );
-
-        },
+        }
+,
         child: Container(
           decoration: const BoxDecoration(
             gradient: ColorBest,
@@ -64,8 +73,8 @@ class TheBesrCatogary extends StatelessWidget {
                             gradient: ColorBestCountinar,
                             color: Colors.black.withOpacity(0.9)),
                         child: const Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 12),
                           child: Text(
                             'Explore now',
                             style: TextStyle(color: Colors.white, fontSize: 18),
@@ -78,12 +87,13 @@ class TheBesrCatogary extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 24),
-                child: Hero(                tag: 'itemImage-${item.id}', // لازم tag يكون unique
+                child: Hero(
+                  tag: 'itemImage-${item.id}', // لازم tag يكون unique
 
                   child: Image.network(
                     item.imageUrl,
-                    width: 180, // قللتها عشان توسع للنص
-                    height: 180,
+                    width: 170, // قللتها عشان توسع للنص
+                    height: 170,
                     fit: BoxFit.cover,
                   ),
                 ),
